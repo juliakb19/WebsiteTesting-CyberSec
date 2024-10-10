@@ -15,8 +15,8 @@ meta_tag = driver.find_elements(By.XPATH, "//meta[@name='robots']")
 
 if meta_tag:
     content = meta_tag[0].get_attribute('content')
-    print(f"La etiqueta <meta name='robots'> está presente con el valor: {content}")
+    print(f"La etiqueta <meta name='robots'> amb valor: {content}")
 else:
-    print("La etiqueta <meta name='robots'> no está presente en la página.")
+    print("No hi ha l'etiqueta <meta name='robots'>")
 
 driver.quit()
