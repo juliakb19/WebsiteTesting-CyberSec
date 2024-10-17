@@ -144,11 +144,11 @@ def test_testKEvin(driver):
         driver.find_element(By.CSS_SELECTOR, ".elementor-field-group .elementor-button-content-wrapper").click()
         sleep(5)
         page_source = driver.page_source
-        assert "Your submission was successful." in page_source, "El mensaje de confirmación no se encontró en la página."
+        assert "Your submission was successful." in page_source, "El missatge de confirmació no s'ha trobat."
     
     except Exception as e:
-        print(f"Ocurrió un error: {e}")
-        assert False, "Se produjo un error durante la prueba."
+        print(f"Ha sorgit un error {e}")
+        assert False, "S'ha produit un error durant la prova."
 
 
 def test_Evaristo(driver):
