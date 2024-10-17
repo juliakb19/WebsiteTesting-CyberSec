@@ -191,3 +191,27 @@ def test_Evaristo(driver):
     # Cerrar el navegador
     driver.quit()
     
+def test_preu_beginner(driver):
+    driver.get("http://www.cibergrup1.cecti.iesmontsia.cat/")
+    driver.execute_script("window.scrollBy(0, 2500);")
+
+    sleep(2)
+    # Fem clic al botó de "Beginner" -- com el trobem? Doncs amb l'XPATH que diu on està al codi HTML.
+    begginner_button = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//span[text()='Beginner']/.."))
+    )
+    # Un cop trobat, el fem clic -- com si ho fessis tu amb el ratolí!
+    begginner_button.click()
+
+    # Ara busquem el text que ens ha de sortir quan seleccionem "Beginner".
+    # Hauria de dir "120€", així que li diem al codi que trobi exactament això.
+    result_element = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//h2[text()='120€']"))
+    )
+    # Agafem el text que ha trobat per comprovar si realment és "120€"
+    result_text = result_element.text
+
+    # El "assert" és com un exàmen. Aquí diu:
+    # "Si el text NO és '120€', fes-me un error que diu 'Ei, el valor no és 120€ per beginner, és {result_text}'".
+    # És com dir-li: "Si em falles, fes-ho amb estil".
+    assert result_text == "120€", f"Ei, el valor no és 120€ per beginner, és {result_text}"
