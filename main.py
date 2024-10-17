@@ -153,17 +153,32 @@ def test_testKEvin(driver):
 
 def test_Evaristo(driver):
 
+    # Navegar a la página web http://www.cibergrup1.cecti.iesmontsia.cat
+     #driver.get("http://www.cibergrup1.cecti.iesmontsia.cat/")
+     #Nota: Como no consigo tener acceso a la pagina web del colegio para
+     #poder realizar las pruebas he configurado la web www.tallerscornet.com para los mismos fines
+     #es una página creado tb con wordpress.
+         
+    driver.get("http://www.tallerscornet.com/")
+    
     # Esperar un poco para asegurarse de que la página esté completamente cargada
     time.sleep(5)
-    # Obtener el contenido de la página
-    body_text = driver.find_element(By.TAG_NAME, "body").text
-    # Comprobar si el correo electrónico está en el contenido de la página
-    email = "Info@cybersec.com"
-
     
-    if email in body_text:
+    # Obtener el contenido de la página y lo guardamos en body_text
+    body_text = driver.find_element(By.TAG_NAME, "body").text
+    
+    
+    # Comprobar si el correo electrónico está en el contenido de la página
+    #email = "Info@cybersec.com"
+    #Aqui miramos si existe el correo info@tallerscornet.com en lugar de Info@cybersec.com
+    email="info@tallerscornet.com"
+
+    #Lo pasaremos todo a minisculas para evitar errores en la comparación
+    if email.lower() in body_text.lower():
         print(f"El correo electrónico {email} está presente en la página.")
     else:
         print(f"El correo electrónico {email} NO está presente en la página.")
 
-    # assert email in body_text, f"El correo electrónico {email} NO está presente en la página."
+    # Cerrar el navegador
+    driver.quit()
+    
