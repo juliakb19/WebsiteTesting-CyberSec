@@ -99,17 +99,23 @@ def test_meta_description(driver):
 
 
 def test_click_button(driver):
+
+    # Buscar la pàgina web
     driver.get("http://www.cibergrup1.cecti.iesmontsia.cat/")
+
+    # Sleep per a que carregui
     sleep(2)
 
     try:
-        # buscar el botón por la clase
+        # buscar el botó per la clase
         button = driver.find_element(By.CLASS_NAME, 'cmplz-deny')
         
-        # Verificar si el botón fue encontrado
+        # Verificar si el botó s'ha trobat
         assert button is not None, "Botó 'cmplz-deny' no trobat."
 
     except NoSuchElementException as e:
+
+        # Mostrar error
         print(f"Error: {e}")
         assert False, "Botó 'cmplz-deny' no trobat."
 
