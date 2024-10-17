@@ -182,7 +182,7 @@ def test_Evaristo(driver):
         print("Página cargada completamente.")
         
     except Exception as e:
-        assert false, (f"Ocurrió un error en la carga de la página: {e}")
+        assert False, (f"Ocurrió un error en la carga de la página: {e}")
     
     # Obtener el contenido de la página y lo guardamos en body_text
     body_text = driver.find_element(By.TAG_NAME, "body").text
