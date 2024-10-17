@@ -25,17 +25,20 @@ def driver():
 def test_formulari_email(driver):
     try:
         driver.get("http://www.cibergrup1.cecti.iesmontsia.cat/")
-        
+
         driver.find_element(By.ID, "form-field-name").send_keys("Jordi Navarro Gómez")
         driver.find_element(By.ID, "form-field-field_082047e").send_keys("658748211")
         driver.find_element(By.ID, "form-field-field_bbf37c1").send_keys("IESMontsia")
         driver.find_element(By.ID, "form-field-message").send_keys("Test python")
+        #driver.find_element(By.ID, "form-field-email").send_keys("jordi@iesmontsia.org")
+
+        driver.find_element(By.CSS_SELECTOR, ".elementor-field-group .elementor-button-content-wrapper").click()
+
 
         email_field = driver.find_element(By.ID, "form-field-email")
-        email_field.send_keys("alumne@gmail.com") 
-        email_value = email_field.get_attribute("value")
-        
-        assert email_value != "", "El campo d'email no pot estar buit"  
+        validation_message = email_field.get_attribute("validationMessage")
+        assert validation_message == "Please fill out this field.", \
+                f"El mensaje de validación esperado no apareció. Se encontró: '{validation_message}'"
 
     except Exception as e:
         print(f"S'ha produït un error: {e}")
