@@ -77,24 +77,24 @@ def test_meta_description(driver):
     driver.get("http://www.cibergrup1.cecti.iesmontsia.cat")
 
     try:
-        # Esperar hasta que el meta tag esté presente (hasta 10 segundos)
+        # Esperar hasta que el meta tag estigui present (10 segons)
         meta_description = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.XPATH, "//meta[@name='description']"))
         )
         
-        # Obtener el valor del atributo content
+        # Obtenim el valor de la meta description
         description_content = meta_description.get_attribute("content")
 
-        # Mostrar el valor obtenido
+        # Mostrar el valor obtingut de la meta description
         print(f"Meta description content: {description_content}")
         
-        # Verificar que la meta description no sea vacía
+        # Verificar que la meta description 
         assert description_content is not None and description_content.strip() != "", "La meta descripción no se ha encontrado o está vacía"
-        
+    # SI FALLA EN TRY IMPRIMEIX EL ERROR    
     except Exception as e:
         print(f"Error: {e}")
     
-    # Cerrar el navegador
+    # TANCA EL NAVEGADOR
     driver.quit()
 
 
