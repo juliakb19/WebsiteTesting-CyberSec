@@ -1,46 +1,58 @@
-# Objectiu del test:
-# Aquest test comprova que, en seleccionar l'opció "Beginner" a la pàgina web,
-# es mostri correctament el valor "120€". Si el valor és correcte, el test passa;
-# si no, el test falla i ens avisa que el valor esperat no coincideix.
-
 import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.firefox.service import Service
+from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from time import sleep
 
-# Aquí fem la fixture pel driver de Selenium -- sino me petava el test.
-# Bàsicament, aquest codi prepara el navegador per obrir-lo quan faci falta.
-@pytest.fixture
-def driver():
-    # O sigui, aquí inicialitzem Chrome. Assegura't que el "ruta_al_driver" sigui correcte!!
-    driver = webdriver.Chrome(executable_path="ruta_al_driver")
-    # Obrim la pàgina local amb la ruta exacta
-    driver.get("file:///home/programmer/Descargas/cybersecweb/cybersecweb/Home%20-%20CyberSec.html")
-    # El "yield" manté el navegador obert mentre el test es fa, 
-    # i quan acaba, el "quit()" el tanca -- perquè si no, se'ns omple el PC de finestres obertes.
-    yield driver
-    driver.quit()
+# Configuración del driver de Firefox sin opciones adicionales
+service = Service(GeckoDriverManager().install())
+driver = webdriver.Firefox(service=service)
 
-# Aquí és on es fa el test real
-@pytest.mark.usefixtures("driver")
-def test_begginner_value(driver):
-    # Fem clic al botó de "Beginner" -- com el trobem? Doncs amb l'XPATH que diu on està al codi HTML.
+def test_preu_beginner():
+    # Carregar la pàgina
+    driver.get("http://www.cibergrup1.cecti.iesmontsia.cat/")
+
+    # Desplaçar-se cap avall en la pàgina
+    driver.execute_script("window.scrollBy(0, 2500);")
+    sleep(2)  # Pausa per assegurar que la pàgina ha carregat després del desplaçament
+
+    # Trobar i fer clic en el botó "Beginner"
     begginner_button = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, "//span[text()='Beginner']/.."))
     )
-    # Un cop trobat, el fem clic -- com si ho fessis tu amb el ratolí!
     begginner_button.click()
 
-    # Ara busquem el text que ens ha de sortir quan seleccionem "Beginner".
-    # Hauria de dir "120€", així que li diem al codi que trobi exactament això.
+    # Buscar el resultat que hauria de mostrar "120€"
+    result_element = Web
+
+def test_preu_beginner():
+    # Carregar la pàgina
+    driver.get("http://www.cibergrup1.cecti.iesmontsia.cat/")
+
+    # Desplaçar-se cap avall en la pàgina
+    driver.execute_script("window.scrollBy(0, 2500);")
+    sleep(5)  # Pausa per assegurar que la pàgina ha carregat després del desplaçament
+
+    # Trobar i fer clic en el botó "Beginner"
+    begginner_button = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//span[text()='Beginner']/.."))
+    )
+    begginner_button.click()
+
+    # Buscar el resultat que hauria de mostrar "120€"
     result_element = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, "//h2[text()='120€']"))
     )
-    # Agafem el text que ha trobat per comprovar si realment és "120€"
     result_text = result_element.text
 
-    # El "assert" és com un exàmen. Aquí diu:
-    # "Si el text NO és '120€', fes-me un error que diu 'Ei, el valor no és 120€ per beginner, és {result_text}'".
-    # És com dir-li: "Si em falles, fes-ho amb estil".
+    # Comprovar que el valor mostrat sigui "120€"
     assert result_text == "120€", f"Ei, el valor no és 120€ per beginner, és {result_text}"
+
+    # Tancar el navegador en finalitzar el test
+    driver.quit()
+
+# Crida a la funció per executar el test
+test_preu_beginner()
